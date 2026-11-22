@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+# Create the live desktop account in the image so LightDM can autologin.
+if ! id moonlight >/dev/null 2>&1; then
+    adduser --disabled-password --gecos "Moonlight Linux" --shell /bin/bash moonlight
+fi
+
+for group in sudo audio video plugdev netdev; do
+    if getent group "$group" >/dev/null 2>&1; then
+        usermod -aG "$group" moonlight
+    fi
+done
+
+if [ -d /etc/skel ]; then
+    cp -an /etc/skel/. /home/moonlight/ 2>/dev/null || true
+fi
+chown -R moonlight:moonlight /home/moonlight
