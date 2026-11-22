@@ -43,7 +43,7 @@ nano
 maim
 brightnessctl
 i3lock
-parcellite
+
 suckless-tools
 xbindkeys
 synaptic
@@ -52,7 +52,8 @@ synaptic
 network-manager
 network-manager-gnome
 wpasupplicant
-policykit-1
+pkexec
+polkitd
 udisks2
 gvfs
 gvfs-backends
