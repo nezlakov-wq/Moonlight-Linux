@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+lb config noauto \
+  --mode debian \
+  --distribution trixie \
+  --architectures amd64 \
+  --binary-images iso-hybrid \
+  --debian-installer false \
+  --archive-areas "main contrib non-free-firmware" \
+  --apt-recommends false \
+  --apt-indices false \
+  --memtest none \
+  --bootappend-live "boot=live components hostname=moonlight username=moonlight locales=en_US.UTF-8 keyboard-layouts=us"
