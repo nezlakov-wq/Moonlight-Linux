@@ -13,47 +13,51 @@ jobs:
   build:
     name: Build Debian Live ISO
     runs-on: ubuntu-latest
-    container:
-      image: debian:trixie
     steps:
-      - name: Install Debian Trixie build tools
-        run: |
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            git ca-certificates live-build debootstrap xorriso squashfs-tools \
-            dosfstools mtools grub-pc-bin grub-efi-amd64-bin \
-            grub-efi-amd64-signed shim-signed
-
       - name: Check out source
         uses: actions/checkout@v5
 
       - name: Validate shell scripts
-        run: |
-          set -eu
-          sh -n auto/config
-          sh -n config/hooks/normal/0500-opera-gx.hook.chroot
-          for script in config/includes.chroot/usr/bin/*; do
-            case "$(head -n 1 "$script")" in
-              '#!/bin/bash') bash -n "$script" ;;
-              *) sh -n "$script" ;;
-            esac
-          done
-
-      - name: Validate Debian Trixie package manifest
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t packages < <(sed 's/#.*//' config/package-lists/*.list.chroot | awk 'NF { print $1 }')
-          apt-get install --simulate --no-install-recommends "${packages[@]}"
+          sh -n auto/config
+          sh -n config/hooks/normal/0500-opera-gx.hook.chroot
+          while IFS= read -r -d '' script; do
+            if [[ "$(head -n 1 "$script")" == '#!/bin/bash' ]]; then
+              bash -n "$script"
+            else
+              sh -n "$script"
+            fi
+          done < <(find config/includes.chroot/usr/bin -maxdepth 1 -type f -print0)
 
-      - name: Configure and build ISO
+      - name: Build and validate inside privileged Debian Trixie builder
+        shell: bash
         run: |
-          chmod +x auto/config
-          lb config
-          lb build
+          set -euo pipefail
+          docker run --privileged --rm \
+            --volume "$GITHUB_WORKSPACE:/work" \
+            --workdir /work \
+            debian:trixie bash -euxo pipefail -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt-get update
+              apt-get install -y --no-install-recommends \
+                live-build debootstrap xorriso squashfs-tools dosfstools mtools \
+                grub-pc-bin grub-efi-amd64-bin grub-efi-amd64-signed shim-signed \
+                ca-certificates
+
+              mapfile -t packages < <(sed "s/#.*//" config/package-lists/*.list.chroot | awk "NF { print \\$1 }")
+              apt-get install --simulate --no-install-recommends "${packages[@]}"
+
+              chmod +x auto/config
+              lb config
+              lb build
+            '
 
       - name: Prepare downloadable ISO
+        shell: bash
         run: |
+          set -euo pipefail
           mkdir -p output
           test -s live-image-amd64.hybrid.iso
           cp live-image-amd64.hybrid.iso output/Moonlight-Linux-amd64.iso
