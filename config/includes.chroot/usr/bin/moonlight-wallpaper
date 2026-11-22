@@ -1,0 +1,11 @@
+#!/bin/sh
+choice="$(yad --list --title='Moonlight Wallpapers' --text='Choose a wallpaper' --column='Wallpaper' --print-column=1 --width=360 --height=240 \
+  'Midnight Blue' 'Moonlight' 'Deep Space' \
+  --button='Apply:0' --button='Cancel:1' 2>/dev/null)" || exit 0
+case "$choice" in
+  'Midnight Blue') file=/usr/share/backgrounds/moonlight.svg ;;
+  'Moonlight') file=/usr/share/backgrounds/moonlight-silver.svg ;;
+  'Deep Space') file=/usr/share/backgrounds/moonlight-space.svg ;;
+  *) exit 0 ;;
+esac
+feh --bg-fill "$file"
