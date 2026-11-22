@@ -1,0 +1,44 @@
+# Debian Live base
+live-boot
+live-config
+live-config-systemd
+systemd-sysv
+linux-image-amd64
+sudo
+locales
+keyboard-configuration
+console-setup
+
+# Lightweight graphical desktop
+xserver-xorg
+xinit
+openbox
+tint2
+conky-std
+pcmanfm
+lxterminal
+lightdm
+lightdm-gtk-greeter
+dbus-x11
+fonts-dejavu-core
+feh
+x11-xserver-utils
+
+# Networking, audio and removable drives
+network-manager
+network-manager-gnome
+wpasupplicant
+policykit-1
+udisks2
+gvfs
+gvfs-backends
+alsa-utils
+pavucontrol
+
+# Small utilities
+mousepad
+htop
+nano
+curl
+wget
+ca-certificates
