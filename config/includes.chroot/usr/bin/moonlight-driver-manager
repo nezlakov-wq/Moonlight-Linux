@@ -1,0 +1,71 @@
+#!/bin/bash
+set -euo pipefail
+
+if ! command -v yad >/dev/null 2>&1; then
+  echo "YAD is required." >&2
+  exit 1
+fi
+
+pci="$(lspci -nn 2>/dev/null || true)"
+usb="$(lsusb 2>/dev/null || true)"
+all="$pci"$'\n'"$usb"
+packages=()
+reasons=()
+
+add_pkg() {
+  local pkg="$1" reason="$2"
+  for existing in "${packages[@]:-}"; do
+    [[ "$existing" == "$pkg" ]] && return
+  done
+  packages+=("$pkg")
+  reasons+=("$reason")
+}
+has_vendor() { grep -Eqi "$1" <<<"$2"; }
+
+# Wireless and Bluetooth firmware: select only vendors actually found.
+wireless="$(grep -Ei 'network controller|wireless|802\.11|wi-?fi' <<<"$pci" || true)"
+if [[ -n "$wireless" ]]; then
+  if has_vendor '\[8086:' "$wireless"; then add_pkg firmware-iwlwifi "Intel Wi-Fi"; fi
+  if has_vendor '\[10ec:' "$wireless" || has_vendor '0bda:' "$usb"; then add_pkg firmware-realtek "Realtek Wi-Fi / Bluetooth"; fi
+  if has_vendor '\[(168c|17cb):' "$wireless" || has_vendor '0cf3:' "$usb"; then add_pkg firmware-atheros "Qualcomm Atheros Wi-Fi"; fi
+  if has_vendor '\[14e4:' "$wireless" || has_vendor '0a5c:' "$usb"; then add_pkg firmware-brcm80211 "Broadcom Wi-Fi"; fi
+  if has_vendor '\[14c3:' "$wireless" || has_vendor '0e8d:' "$usb"; then add_pkg firmware-mediatek "MediaTek Wi-Fi"; fi
+  if has_vendor '\[1b4b:' "$wireless"; then add_pkg firmware-marvell-prestera "Marvell network hardware"; fi
+fi
+
+display="$(grep -Ei 'VGA compatible controller|3D controller|Display controller' <<<"$pci" || true)"
+if [[ -n "$display" ]]; then
+  if has_vendor '\[1002:' "$display"; then add_pkg firmware-amd-graphics "AMD graphics"; fi
+  if has_vendor '\[8086:' "$display"; then add_pkg firmware-intel-graphics "Intel graphics"; fi
+  if has_vendor '\[10de:' "$display"; then add_pkg firmware-nvidia-graphics "NVIDIA graphics firmware"; fi
+fi
+
+if has_vendor '\[8086:' "$(grep -Ei 'audio device|multimedia audio' <<<"$pci" || true)"; then
+  add_pkg firmware-intel-sound "Intel audio DSP"
+fi
+
+if (( ${#packages[@]} == 0 )); then
+  yad --info --title="Moonlight Driver Manager" --width=440 \
+    --text="No additional Debian firmware package was identified from the detected PCI/USB devices.\n\nThe Linux kernel may already contain the required driver. If Wi-Fi is unavailable, connect temporarily using Ethernet or USB tethering and try again."
+  exit 0
+fi
+
+summary=""
+for i in "${!packages[@]}"; do
+  summary+="• ${packages[$i]} — ${reasons[$i]}\n"
+done
+
+if ! yad --question --title="Moonlight Driver Manager" --width=520 \
+  --text="Detected hardware may need these firmware packages:\n\n$summary\nDownload and install only these packages now?\n\nAn internet connection is required."; then
+  exit 0
+fi
+
+csv="$(IFS=,; echo "${packages[*]}")"
+if ! pkexec /usr/bin/moonlight-driver-install "$csv"; then
+  yad --error --title="Moonlight Driver Manager" --width=460 \
+    --text="Installation did not complete. Check your internet connection and administrator authorization, then try again."
+  exit 1
+fi
+
+yad --info --title="Moonlight Driver Manager" --width=460 \
+  --text="Firmware packages installed successfully.\n\nReconnect the affected device or reboot if it is still unavailable. Package installation may not immediately reload a driver."

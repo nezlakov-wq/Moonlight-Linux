@@ -65,6 +65,10 @@ zram-tools
 earlyoom
 tlp
 
+# Hardware detection tools (used only when Driver Manager is opened)
+pciutils
+usbutils
+
 # Basic command-line tools
 curl
 wget

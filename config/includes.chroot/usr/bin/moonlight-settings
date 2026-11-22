@@ -6,6 +6,7 @@ choice="$(yad --list --title='Moonlight Control Center' --text='Choose a setting
   'Keyboard and mouse' 'Input settings' \
   'Sound' 'Volume and audio devices' \
   'Network' 'Wi-Fi connections' \
+  'Drivers and hardware' 'Detect hardware and download matching firmware' \
   'Quick toggles' 'Wi-Fi, Bluetooth, sound and brightness' \
   'Power saving' 'Screen timeout and laptop power profile' \
   'Applications' 'Install or remove software' \
@@ -20,6 +21,7 @@ case "$choice" in
   'Keyboard and mouse') lxinput ;;
   Sound) pavucontrol ;;
   Network) nm-connection-editor ;;
+  'Drivers and hardware') moonlight-driver-manager ;;
   'Quick toggles') moonlight-toggles ;;
   'Power saving') moonlight-power ;;
   Applications) pkexec synaptic ;;

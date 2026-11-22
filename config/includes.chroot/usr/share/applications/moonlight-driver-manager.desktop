@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Drivers and Hardware
+Comment=Detect devices and install matching firmware over the internet
+Exec=moonlight-driver-manager
+Icon=preferences-driver
+Terminal=false
+Categories=Settings;System;
