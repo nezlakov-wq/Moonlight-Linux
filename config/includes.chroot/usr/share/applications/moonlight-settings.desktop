@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Moonlight Settings
+Comment=Configure appearance, display, sound and devices
+Exec=moonlight-settings
+Icon=preferences-system
+Terminal=false
+Categories=Settings;System;
