@@ -72,6 +72,11 @@ tlp
 pciutils
 usbutils
 
+# Windows application compatibility (optional use; memory-heavy)
+wine
+wine64
+fonts-wine
+
 # Basic command-line tools
 curl
 wget

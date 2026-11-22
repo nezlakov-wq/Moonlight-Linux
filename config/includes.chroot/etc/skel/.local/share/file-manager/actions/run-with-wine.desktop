@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Action
+Name=Запустить с помощью Wine
+Name[en]=Run with Wine
+Icon=wine
+Profiles=run-wine;
+
+[X-Action-Profile run-wine]
+Name=Run Windows executable
+MimeTypes=application/x-ms-dos-executable;application/vnd.microsoft.portable-executable;
+SelectionCount==1
+Exec=wine %f
