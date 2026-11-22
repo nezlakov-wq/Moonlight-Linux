@@ -1,0 +1,20 @@
+#!/bin/sh
+set -eu
+
+# Install Opera GX from Opera's official Debian repository.
+# This hook runs inside the live-build chroot after the base package install.
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gnupg
+
+install -d -m 0755 /usr/share/keyrings
+wget -qO- https://deb.opera.com/archive.key | gpg --dearmor --yes -o /usr/share/keyrings/opera-browser.gpg
+chmod 0644 /usr/share/keyrings/opera-browser.gpg
+
+printf '%s\n' 'deb [signed-by=/usr/share/keyrings/opera-browser.gpg] https://deb.opera.com/opera-gx-stable/ stable non-free' > /etc/apt/sources.list.d/opera-gx.list
+
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends opera-gx-stable
+
+# Keep the browser available from the application menu; never launch it at login.
+apt-get clean
+rm -rf /var/lib/apt/lists/*
