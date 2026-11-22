@@ -23,7 +23,7 @@ A lightweight Debian Live system for x86-64, built around Openbox, Tint2, Conky 
 - **File manager:** PCManFM with GVFS and removable-drive support.
 - **Notifications:** Dunst.
 - **Built-in apps:** Mousepad, Galculator, Xarchiver, GPicView, LXTerminal, PCManFM and screenshot utility.
-- **Software center:** Synaptic package manager (administrator authorization required).\n- **Driver Manager:** detects common Intel, AMD, NVIDIA, Realtek, Qualcomm/Atheros, Broadcom and MediaTek hardware; after internet is available, it downloads only the matching Debian firmware packages on demand. It does not run in the background.
+- **Software center:** Synaptic package manager (administrator authorization required).\n- **Driver Manager:** detects common Intel, AMD, NVIDIA, Realtek, Qualcomm/Atheros, Broadcom, MediaTek and Marvell wireless hardware; after internet is available, it downloads only matching Debian firmware packages on demand. It does not run in the background.
 - **Browser:** Opera GX Stable, installed during the ISO build from Opera's official signed Debian repository. It is available from the application menu and does not start automatically.
 - **Low-memory support:** zram-tools with zstd compression and earlyoom as a last-resort memory-pressure safeguard.
 
@@ -57,5 +57,5 @@ The workflow builds a Debian Live hybrid ISO in a Debian Trixie container and st
 ## Target hardware and limitations
 - amd64 / x86-64.
 - 1 GB RAM target; actual performance must be measured on real hardware.
-- This is a live image recipe. It does not yet include a graphical installer or a persistent installation wizard.
+- This is a live image recipe. It does not yet include a graphical installer or a persistent installation wizard. Firmware packages installed in a non-persistent live session are lost at shutdown; configure live persistence or install the system to disk to keep them.
 - Test the ISO in a virtual machine before writing it to USB or using it on a physical computer. Writing an ISO to a USB drive erases that drive.

@@ -8,7 +8,7 @@ fi
 
 pci="$(lspci -nn 2>/dev/null || true)"
 usb="$(lsusb 2>/dev/null || true)"
-all="$pci"$'\n'"$usb"
+usbwireless="$(grep -Ei 'wireless|802\.11|wlan|wi-?fi' <<<"$usb" || true)"
 packages=()
 reasons=()
 
@@ -22,15 +22,14 @@ add_pkg() {
 }
 has_vendor() { grep -Eqi "$1" <<<"$2"; }
 
-# Wireless and Bluetooth firmware: select only vendors actually found.
 wireless="$(grep -Ei 'network controller|wireless|802\.11|wi-?fi' <<<"$pci" || true)"
-if [[ -n "$wireless" ]]; then
+if [[ -n "$wireless" || -n "$usbwireless" ]]; then
   if has_vendor '\[8086:' "$wireless"; then add_pkg firmware-iwlwifi "Intel Wi-Fi"; fi
-  if has_vendor '\[10ec:' "$wireless" || has_vendor '0bda:' "$usb"; then add_pkg firmware-realtek "Realtek Wi-Fi / Bluetooth"; fi
-  if has_vendor '\[(168c|17cb):' "$wireless" || has_vendor '0cf3:' "$usb"; then add_pkg firmware-atheros "Qualcomm Atheros Wi-Fi"; fi
-  if has_vendor '\[14e4:' "$wireless" || has_vendor '0a5c:' "$usb"; then add_pkg firmware-brcm80211 "Broadcom Wi-Fi"; fi
-  if has_vendor '\[14c3:' "$wireless" || has_vendor '0e8d:' "$usb"; then add_pkg firmware-mediatek "MediaTek Wi-Fi"; fi
-  if has_vendor '\[1b4b:' "$wireless"; then add_pkg firmware-marvell-prestera "Marvell network hardware"; fi
+  if has_vendor '\[10ec:' "$wireless" || has_vendor '0bda:' "$usbwireless"; then add_pkg firmware-realtek "Realtek Wi-Fi / Bluetooth"; fi
+  if has_vendor '\[(168c|17cb):' "$wireless" || has_vendor '0cf3:' "$usbwireless"; then add_pkg firmware-atheros "Qualcomm Atheros Wi-Fi"; fi
+  if has_vendor '\[14e4:' "$wireless" || has_vendor '0a5c:' "$usbwireless"; then add_pkg firmware-brcm80211 "Broadcom Wi-Fi"; fi
+  if has_vendor '\[14c3:' "$wireless" || has_vendor '0e8d:' "$usbwireless"; then add_pkg firmware-mediatek "MediaTek Wi-Fi"; fi
+  if has_vendor '\[11ab:' "$wireless" || has_vendor '11ab:' "$usbwireless"; then add_pkg firmware-libertas "Marvell wireless hardware"; fi
 fi
 
 display="$(grep -Ei 'VGA compatible controller|3D controller|Display controller' <<<"$pci" || true)"

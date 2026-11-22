@@ -23,7 +23,7 @@ IFS="$old_ifs"
 # Strict allow-list: no arbitrary package names can be passed to this helper.
 for pkg in "$@"; do
   case "$pkg" in
-    firmware-iwlwifi|firmware-realtek|firmware-atheros|firmware-brcm80211|firmware-mediatek|firmware-marvell-prestera|firmware-amd-graphics|firmware-intel-graphics|firmware-nvidia-graphics|firmware-intel-sound) ;;
+    firmware-iwlwifi|firmware-realtek|firmware-atheros|firmware-brcm80211|firmware-mediatek|firmware-libertas|firmware-amd-graphics|firmware-intel-graphics|firmware-nvidia-graphics|firmware-intel-sound) ;;
     *) echo "Package not allowed: $pkg" >&2; exit 2 ;;
   esac
 done
