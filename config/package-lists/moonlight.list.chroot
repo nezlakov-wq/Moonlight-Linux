@@ -23,6 +23,24 @@ dbus-x11
 fonts-dejavu-core
 feh
 x11-xserver-utils
+jgmenu
+dunst
+
+# Lightweight settings and utilities
+lxappearance
+lxappearance-obconf
+lxrandr
+lxinput
+lxtask
+yad
+galculator
+xarchiver
+gpicview
+mousepad
+htop
+nano
+maim
+brightnessctl
 
 # Networking, audio and removable drives
 network-manager
@@ -35,10 +53,11 @@ gvfs-backends
 alsa-utils
 pavucontrol
 
-# Small utilities
-mousepad
-htop
-nano
+# Memory protection
+zram-tools
+earlyoom
+
+# Basic command-line tools
 curl
 wget
 ca-certificates
