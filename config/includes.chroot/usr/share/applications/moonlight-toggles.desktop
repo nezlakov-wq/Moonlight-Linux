@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Quick toggles
+Comment=Wi-Fi, Bluetooth, sound and brightness
+Exec=moonlight-toggles
+Icon=preferences-system
+Terminal=false
+Categories=System;Utility;

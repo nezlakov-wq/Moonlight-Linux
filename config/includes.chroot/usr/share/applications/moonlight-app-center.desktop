@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Application Center
+Comment=Install and remove software
+Exec=pkexec synaptic
+Icon=synaptic
+Terminal=false
+Categories=System;Utility;

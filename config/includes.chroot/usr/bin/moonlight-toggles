@@ -4,7 +4,7 @@ while :; do
   choice="$(yad --list --title='Moonlight Quick Toggles' --text='Choose a quick action' --column='Action' --width=380 --height=300 \
     'Toggle Wi-Fi' 'Toggle Bluetooth' 'Open sound control' 'Mute / unmute' 'Increase brightness' 'Decrease brightness' 'Open network settings' --print-column=1 --button='Run:0' --button='Close:1' 2>/dev/null)" || exit 0
   case "$choice" in
-    'Toggle Wi-Fi') nmcli radio wifi off 2>/dev/null || nmcli radio wifi on ;;
+    'Toggle Wi-Fi') if nmcli -t -f WIFI general 2>/dev/null | grep -qi enabled; then nmcli radio wifi off; else nmcli radio wifi on; fi ;;
     'Toggle Bluetooth') if rfkill list bluetooth 2>/dev/null | grep -q 'Soft blocked: no'; then rfkill block bluetooth; else rfkill unblock bluetooth; fi ;;
     'Open sound control') pavucontrol & ;;
     'Mute / unmute') pactl set-sink-mute @DEFAULT_SINK@ toggle 2>/dev/null || amixer set Master toggle ;;

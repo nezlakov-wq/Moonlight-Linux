@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Screenshots
+Comment=Capture the screen or a selected region
+Exec=moonlight-screenshot
+Icon=applets-screenshooter
+Terminal=false
+Categories=System;Utility;

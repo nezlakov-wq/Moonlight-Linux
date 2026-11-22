@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Power saving
+Comment=Display timeout and laptop power settings
+Exec=moonlight-power
+Icon=battery
+Terminal=false
+Categories=System;Utility;

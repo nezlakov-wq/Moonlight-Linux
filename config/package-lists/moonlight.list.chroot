@@ -25,6 +25,7 @@ feh
 x11-xserver-utils
 jgmenu
 dunst
+libnotify-bin
 
 # Lightweight settings and utilities
 lxappearance
