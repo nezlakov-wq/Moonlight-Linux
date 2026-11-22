@@ -1,0 +1,4 @@
+# Compressed RAM swap for low-memory computers.
+ALGO=zstd
+PERCENT=50
+PRIORITY=100
