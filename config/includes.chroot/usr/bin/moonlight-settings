@@ -1,0 +1,21 @@
+#!/bin/sh
+choice="$(yad --list --title='Moonlight Control Center' --text='Choose a setting to open' --column='Settings' --column='Description' --print-column=1 --width=470 --height=330 \
+  'Appearance' 'GTK theme and icons' \
+  'Wallpaper' 'Desktop background' \
+  'Display' 'Screen resolution' \
+  'Keyboard and mouse' 'Input settings' \
+  'Sound' 'Volume and audio devices' \
+  'Network' 'Wi-Fi connections' \
+  'System monitor' 'Processes and memory' \
+  'File manager' 'Browse files' \
+  --button='Open:0' --button='Cancel:1' 2>/dev/null)" || exit 0
+case "$choice" in
+  Appearance) lxappearance ;;
+  Wallpaper) /usr/bin/moonlight-wallpaper ;;
+  Display) lxrandr ;;
+  'Keyboard and mouse') lxinput ;;
+  Sound) pavucontrol ;;
+  Network) nm-connection-editor ;;
+  'System monitor') lxtask ;;
+  'File manager') pcmanfm ;;
+esac
