@@ -2,7 +2,6 @@
 live-boot
 live-config
 live-config-systemd
-systemd-sysv
 linux-image-amd64
 sudo
 locales
@@ -33,6 +32,7 @@ lxappearance-obconf
 lxrandr
 lxinput
 lxtask
+lxpolkit
 yad
 galculator
 xarchiver
@@ -43,21 +43,23 @@ nano
 maim
 brightnessctl
 i3lock
-
 suckless-tools
 xbindkeys
 synaptic
 
-# Networking, audio and removable drives
+# Networking, audio and removable devices
 network-manager
 network-manager-gnome
 wpasupplicant
+bluez
 pkexec
 polkitd
 udisks2
 gvfs
 gvfs-backends
 alsa-utils
+pipewire-audio
+pulseaudio-utils
 pavucontrol
 rfkill
 

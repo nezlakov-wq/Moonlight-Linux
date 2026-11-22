@@ -13,8 +13,8 @@ A lightweight Debian Live system for x86-64, built around Openbox, Tint2, Conky 
 - **Control Center:** Moonlight Settings opens appearance, wallpaper, display, input, sound, network, quick toggles, power settings, software center, system monitor, file manager and screenshot tools.
 - **Screen lock:** i3lock, available with Super+L.
 - **Screenshots:** maim capture of a selected region or full screen; saved under Pictures/Screenshots. Print Screen opens the capture tool.
-- **Clipboard history:** Parcellite tray applet, started in the background.
 - **Quick toggles:** Wi-Fi, Bluetooth, sound and supported brightness controls.
+- **Audio:** PipeWire audio stack with PulseAudio-compatible controls through pavucontrol.
 - **Power saving:** display blanking presets and TLP laptop power management.
 - **Welcome screen:** one-time first-session guide with keyboard shortcuts.
 - **Themes and wallpapers:** LXAppearance plus three bundled vector wallpapers.
@@ -23,7 +23,8 @@ A lightweight Debian Live system for x86-64, built around Openbox, Tint2, Conky 
 - **File manager:** PCManFM with GVFS and removable-drive support.
 - **Notifications:** Dunst.
 - **Built-in apps:** Mousepad, Galculator, Xarchiver, GPicView, LXTerminal, PCManFM and screenshot utility.
-- **Software center:** Synaptic package manager (administrator authorization required).\n- **Driver Manager:** detects common Intel, AMD, NVIDIA, Realtek, Qualcomm/Atheros, Broadcom, MediaTek and Marvell wireless hardware; after internet is available, it downloads only matching Debian firmware packages on demand. It does not run in the background.
+- **Software center:** Synaptic package manager (administrator authorization required).
+- **Driver Manager:** detects common Intel, AMD, NVIDIA, Realtek, Qualcomm/Atheros, Broadcom, MediaTek and Marvell wireless hardware; after internet is available, it downloads matching Debian firmware packages on demand. It does not run in the background.
 - **Browser:** Opera GX Stable, installed during the ISO build from Opera's official signed Debian repository. It is available from the application menu and does not start automatically.
 - **Low-memory support:** zram-tools with zstd compression and earlyoom as a last-resort memory-pressure safeguard.
 
@@ -36,8 +37,7 @@ A lightweight Debian Live system for x86-64, built around Openbox, Tint2, Conky 
 
 ## Memory-conscious design
 - No GNOME, KDE, compositing effects or Electron desktop applications.
-- Lightweight tools are used for locking, search, screenshots and clipboard history.
-- Parcellite and a few small helpers run in the background; no heavy indexing service is used.
+- Lightweight tools are used for locking, search and screenshots; no heavy indexing service is used.
 - TLP is enabled for laptop power management; display timeout can be adjusted from Settings.
 - Opera GX is a Chromium-based browser and can consume substantial memory; on 1 GB RAM, keep only a few tabs open and close it when not browsing.
 - Compressed RAM swap is configured for up to 50% of physical RAM.
@@ -52,7 +52,7 @@ A lightweight Debian Live system for x86-64, built around Openbox, Tint2, Conky 
 5. Wait for the workflow to finish successfully.
 6. Open the completed run and download the `Moonlight-Linux-ISO` artifact.
 
-The workflow builds a Debian Live hybrid ISO in a Debian Trixie container and stores it as a GitHub Actions artifact for 7 days.
+The workflow builds inside a Debian Trixie container using Trixie's own live-build tools and stores the ISO as a GitHub Actions artifact for 7 days. Before building, it checks shell syntax and simulates installation of every package in the manifest against Debian Trixie.
 
 ## Target hardware and limitations
 - amd64 / x86-64.

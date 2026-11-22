@@ -5,7 +5,7 @@ dunst &
 tint2 &
 conky &
 nm-applet &
-
+lxpolkit &
 xbindkeys &
 xset s 300 300
 xset +dpms
