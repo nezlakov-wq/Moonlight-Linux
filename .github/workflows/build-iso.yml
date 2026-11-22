@@ -25,6 +25,15 @@ jobs:
             grub-pc-bin grub-efi-amd64-bin grub-efi-amd64-signed shim-signed \
             ca-certificates
 
+      - name: Patch live-build Contents index path
+        run: |
+          SCRIPT=/usr/lib/live/build/lb_chroot_linux-image
+          sudo test -f "$SCRIPT"
+          sudo sed -i \
+            -e 's|/dists/\${LB_PARENT_DISTRIBUTION}/Contents-|/dists/\${LB_PARENT_DISTRIBUTION}/main/Contents-|g' \
+            -e 's|/dists/\${LB_DISTRIBUTION}/Contents-|/dists/\${LB_DISTRIBUTION}/main/Contents-|g' \
+            "$SCRIPT"
+
       - name: Configure and build ISO
         run: |
           chmod +x auto/config
