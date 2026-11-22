@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Start
-Comment=Open Moonlight applications
+Comment=Open Moonlight applications and search
 Exec=jgmenu
 Icon=applications-other
 Terminal=false

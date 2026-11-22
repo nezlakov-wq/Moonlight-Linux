@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+marker="$HOME/.config/moonlight-welcome-seen"
+[ -e "$marker" ] && exit 0
+mkdir -p "$HOME/.config"
+yad --center --title='Welcome to Moonlight Linux' --width=520 --height=340 --image=computer --button='Get started:0' --button='Close:1' \
+  --text='<b>Welcome to Moonlight Linux</b>\n\nA lightweight Debian desktop designed for older computers.\n\nUse <b>Start</b> on the bottom panel to open apps.\nOpen <b>Settings</b> for display, sound, network, power and screenshots.\nPress <b>Super + D</b> to search applications.\nPress <b>Super + L</b> to lock the screen.\n\nOpera GX may use a lot of memory: on 1 GB RAM, keep tabs to a minimum.' || true
+touch "$marker"

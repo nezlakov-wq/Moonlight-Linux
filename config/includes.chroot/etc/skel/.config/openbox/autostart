@@ -1,7 +1,14 @@
-# Moonlight desktop session. Start only small, useful background services.
+# Moonlight desktop session. Keep background services minimal.
 xsetroot -solid "#0b1020" &
 feh --bg-fill /usr/share/backgrounds/moonlight.svg &
 dunst &
 tint2 &
 conky &
 nm-applet &
+parcellite &
+xbindkeys &
+xset s 300 300
+xset +dpms
+xset dpms 0 0 600
+# Show welcome only once per live user's home directory.
+( sleep 3; moonlight-welcome ) &

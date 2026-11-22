@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+dir="$HOME/Pictures/Screenshots"
+mkdir -p "$dir"
+file="$dir/moonlight-$(date +%Y%m%d-%H%M%S).png"
+mode="$(yad --list --title='Moonlight Screenshot' --text='Choose capture mode' --column='Mode' --column='Description' --print-column=1 --width=360 --height=190 'Select area' 'Drag to select a region' 'Full screen' 'Capture the whole screen' --button='Capture:0' --button='Cancel:1' 2>/dev/null)" || exit 0
+case "$mode" in
+  'Select area') maim -s "$file" ;;
+  'Full screen') maim "$file" ;;
+  *) exit 0 ;;
+esac
+notify-send 'Moonlight' "Screenshot saved: $file"

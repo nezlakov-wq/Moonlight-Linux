@@ -41,6 +41,11 @@ htop
 nano
 maim
 brightnessctl
+i3lock
+parcellite
+suckless-tools
+xbindkeys
+synaptic
 
 # Networking, audio and removable drives
 network-manager
@@ -52,10 +57,12 @@ gvfs
 gvfs-backends
 alsa-utils
 pavucontrol
+rfkill
 
-# Memory protection
+# Memory and power management
 zram-tools
 earlyoom
+tlp
 
 # Basic command-line tools
 curl

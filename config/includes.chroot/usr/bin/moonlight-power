@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+choice="$(yad --list --title='Moonlight Power Saving' --text='Choose a power-saving action' --column='Action' --column='Effect' --print-column=1 --width=440 --height=240 \
+  'Screen off in 5 minutes' 'Turn display off after 5 minutes idle' \
+  'Screen off in 10 minutes' 'Turn display off after 10 minutes idle' \
+  'Screen off in 15 minutes' 'Turn display off after 15 minutes idle' \
+  'Disable screen timeout' 'Keep display on' \
+  'Open TLP status' 'Show laptop power management status' \
+  --button='Apply:0' --button='Cancel:1' 2>/dev/null)" || exit 0
+case "$choice" in
+  'Screen off in 5 minutes') xset s 300 300; xset +dpms; xset dpms 0 0 300 ;;
+  'Screen off in 10 minutes') xset s 600 600; xset +dpms; xset dpms 0 0 600 ;;
+  'Screen off in 15 minutes') xset s 900 900; xset +dpms; xset dpms 0 0 900 ;;
+  'Disable screen timeout') xset s off; xset -dpms ;;
+  'Open TLP status') lxterminal -e sh -c 'sudo tlp-stat -s; echo; read -r -p "Press Enter to close..."' ;;
+esac

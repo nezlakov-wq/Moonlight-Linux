@@ -1,0 +1,11 @@
+# Moonlight keyboard shortcuts
+"i3lock -c 10182b"
+  Mod4 + l
+"dmenu_run"
+  Mod4 + d
+"moonlight-settings"
+  Mod4 + s
+"moonlight-screenshot"
+  Print
+"moonlight-toggles"
+  Mod4 + q

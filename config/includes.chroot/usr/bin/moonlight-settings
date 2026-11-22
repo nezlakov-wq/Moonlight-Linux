@@ -1,13 +1,17 @@
 #!/bin/sh
-choice="$(yad --list --title='Moonlight Control Center' --text='Choose a setting to open' --column='Settings' --column='Description' --print-column=1 --width=470 --height=330 \
+choice="$(yad --list --title='Moonlight Control Center' --text='Choose a setting or utility' --column='Settings' --column='Description' --print-column=1 --width=500 --height=430 \
   'Appearance' 'GTK theme and icons' \
   'Wallpaper' 'Desktop background' \
   'Display' 'Screen resolution' \
   'Keyboard and mouse' 'Input settings' \
   'Sound' 'Volume and audio devices' \
   'Network' 'Wi-Fi connections' \
+  'Quick toggles' 'Wi-Fi, Bluetooth, sound and brightness' \
+  'Power saving' 'Screen timeout and laptop power profile' \
+  'Applications' 'Install or remove software' \
   'System monitor' 'Processes and memory' \
   'File manager' 'Browse files' \
+  'Screenshots' 'Capture the screen or a selected area' \
   --button='Open:0' --button='Cancel:1' 2>/dev/null)" || exit 0
 case "$choice" in
   Appearance) lxappearance ;;
@@ -16,6 +20,10 @@ case "$choice" in
   'Keyboard and mouse') lxinput ;;
   Sound) pavucontrol ;;
   Network) nm-connection-editor ;;
+  'Quick toggles') moonlight-toggles ;;
+  'Power saving') moonlight-power ;;
+  Applications) pkexec synaptic ;;
   'System monitor') lxtask ;;
   'File manager') pcmanfm ;;
+  Screenshots) moonlight-screenshot ;;
 esac

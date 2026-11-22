@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Search applications
+Comment=Search and launch an installed application
+Exec=dmenu_run
+Icon=system-search
+Terminal=false
+Categories=Utility;
