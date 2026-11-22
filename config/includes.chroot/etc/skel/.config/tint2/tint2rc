@@ -2,7 +2,7 @@
 panel_items = LTS
 panel_monitor = all
 panel_position = bottom center horizontal
-panel_size = 100% 38
+panel_size = 100% 40
 panel_margin = 0 0
 panel_padding = 10 3 10
 panel_background_id = 1
@@ -13,11 +13,11 @@ panel_accepts_dnd = 1
 panel_sort = none
 panel_shrink = 0
 panel_autohide = 0
-
+launcher_item_app = /usr/share/applications/moonlight-start.desktop
+launcher_item_app = /usr/share/applications/moonlight-settings.desktop
 launcher_icon_size = 22
 launcher_padding = 6 3 6
 launcher_background_id = 0
-
 taskbar_mode = single_desktop
 taskbar_padding = 4 2 4
 taskbar_background_id = 0
@@ -27,11 +27,9 @@ task_icon_size = 22
 task_text = 0
 task_centered = 0
 task_maximum_size = 180 30
-
 systray_padding = 6 3 6
 systray_icon_size = 18
-
-rounded = 0
+rounded = 6
 border_width = 0
 background_color = #182235 94
 border_color = #26354d 0
