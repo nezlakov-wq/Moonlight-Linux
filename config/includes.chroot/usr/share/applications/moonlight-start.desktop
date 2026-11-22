@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Start
+Comment=Open Moonlight applications
+Exec=jgmenu
+Icon=applications-other
+Terminal=false
+Categories=System;
