@@ -40,6 +40,7 @@ jobs:
           done
 
       - name: Validate Debian Trixie package manifest
+        shell: bash
         run: |
           set -euo pipefail
           mapfile -t packages < <(sed 's/#.*//' config/package-lists/*.list.chroot | awk 'NF { print $1 }')
