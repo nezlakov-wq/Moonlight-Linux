@@ -13,16 +13,14 @@ jobs:
   build:
     name: Build Debian Live ISO
     runs-on: ubuntu-latest
-    container:
-      image: debian:trixie
     steps:
       - name: Check out source
         uses: actions/checkout@v4
 
       - name: Install Debian Live build tools
         run: |
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
             live-build debootstrap xorriso squashfs-tools dosfstools mtools \
             grub-pc-bin grub-efi-amd64-bin grub-efi-amd64-signed shim-signed \
             ca-certificates
@@ -30,14 +28,15 @@ jobs:
       - name: Configure and build ISO
         run: |
           chmod +x auto/config
-          lb config
-          lb build
+          sudo lb config
+          sudo lb build
 
       - name: Prepare downloadable ISO
         run: |
           mkdir -p output
-          test -s live-image-amd64.hybrid.iso
-          cp live-image-amd64.hybrid.iso output/Moonlight-Linux-amd64.iso
+          sudo test -s live-image-amd64.hybrid.iso
+          sudo cp live-image-amd64.hybrid.iso output/Moonlight-Linux-amd64.iso
+          sudo chown runner:runner output/Moonlight-Linux-amd64.iso
           chmod 644 output/Moonlight-Linux-amd64.iso
           sha256sum output/Moonlight-Linux-amd64.iso > output/SHA256SUMS.txt
           ls -lh output/
