@@ -1,6 +1,7 @@
-# Moonlight desktop: quiet background, top-center clock, full-width bottom panel.
+# Moonlight desktop session. Start only small, useful background services.
 xsetroot -solid "#0b1020" &
 feh --bg-fill /usr/share/backgrounds/moonlight.svg &
+dunst &
 tint2 &
 conky &
 nm-applet &
