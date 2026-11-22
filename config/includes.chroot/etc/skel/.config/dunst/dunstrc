@@ -1,0 +1,37 @@
+[global]
+    monitor = 0
+    follow = mouse
+    width = 320
+    height = 100
+    origin = top-right
+    offset = 18x48
+    notification_limit = 4
+    progress_bar = true
+    transparency = 5
+    separator_height = 1
+    padding = 10
+    horizontal_padding = 12
+    frame_width = 1
+    frame_color = "#34445f"
+    font = DejaVu Sans 9
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    word_wrap = yes
+    stack_duplicates = true
+
+[urgency_low]
+    background = "#101a2b"
+    foreground = "#c7d5ed"
+    timeout = 4
+
+[urgency_normal]
+    background = "#182943"
+    foreground = "#e6eeff"
+    timeout = 6
+
+[urgency_critical]
+    background = "#40202b"
+    foreground = "#ffffff"
+    frame_color = "#d05b70"
+    timeout = 0
